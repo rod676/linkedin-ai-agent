@@ -79,3 +79,45 @@ Retourne UNIQUEMENT ce JSON :
     ]
 }}
 """
+
+def carousel_prompt(topic: str, facts: str = "") -> str:
+    
+    facts_section = f"""
+VERIFIED FACTS TO USE:
+{facts}
+""" if facts else "No external facts — do not invent statistics."
+
+    return f"""
+Create a LinkedIn carousel on: {topic}
+
+{facts_section}
+
+A LinkedIn carousel has 6-8 slides maximum.
+Structure:
+- Slide 1: Hook (title that stops the scroll)
+- Slides 2-6: One insight per slide (short, punchy)
+- Last slide: CTA + author name
+
+Return ONLY this JSON without backticks:
+{{
+    "title": "carousel main title",
+    "slides": [
+        {{
+            "slide_number": 1,
+            "type": "hook",
+            "headline": "main title of slide",
+            "body": "1-2 lines maximum",
+            "emoji": "🔴"
+        }},
+        {{
+            "slide_number": 2,
+            "type": "insight",
+            "headline": "insight title",
+            "body": "concrete explanation in 2-3 lines",
+            "emoji": "⚡"
+        }}
+    ],
+    "cta_text": "Follow for daily Cybersecurity & AI insights",
+    "author": "Olade Roland Sagbo | Cybersecurity & AI | Hamburg"
+}}
+"""
